@@ -2,7 +2,7 @@ import React from 'react';
 import './Questions.css';
 
 const Questions = (props) => (
-  <div>
+  <div className="DashboardPage-component">
     Questions
   </div>
 );

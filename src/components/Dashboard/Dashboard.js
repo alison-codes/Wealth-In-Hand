@@ -2,9 +2,10 @@ import React from 'react';
 import Chart from '../Chart/Chart';
 
 const Dashboard = (props) => (
-  <div >
+  <div className="DashboardPage-component">
     Dashboard
       <Chart />
+   
   </div>
 );
 
