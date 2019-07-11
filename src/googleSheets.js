@@ -1,7 +1,10 @@
+// var { google } = require('googleapis');
+// import google from googleapis;
+
+
 // const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 // const TOKEN_PATH = 'token.json';
 // const readline = require('readline');
-// // const { google } = require('googleapis');
 
 // const spreadsheetId = '1IAClT5484iFG6ByNMRmjoSUXYByDlIIiOwKtJ5KIJq8'
 // const fs = require('fs');
@@ -18,13 +21,13 @@
 // };
 
 
-module.exports = {
-  SSS,
-}
+// module.exports = {
+//   SSS,
+// }
 
-function SSS() {
-  console.log("ssssss")
-}
+// function SSS() {
+//   console.log("ssssss")
+// }
 
 
 // Load client secrets from a local file.

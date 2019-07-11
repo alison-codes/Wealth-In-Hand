@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import userService from '../../utils/userService';
 
 class SignupForm extends Component {
-
     state = {
         name: '',
         email: '',
@@ -38,18 +37,38 @@ class SignupForm extends Component {
                 <header >Sign Up</header>
                 <form onSubmit={this.handleSubmit} >
                     <div className="form-group">
-                        <input type="text" className="form-control" placeholder="Name" value={this.state.name} name="name" onChange={this.handleChange} />
+                        <input type="text"
+                            className="form-control"
+                            placeholder="Name"
+                            value={this.state.name} 
+                            name="name" 
+                            onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
                         <div className="col-sm-12">
-                            <input type="email" className="form-control" placeholder="Email" value={this.state.email} name="email" onChange={this.handleChange} />
+                            <input type="email"
+                                className="form-control"
+                                placeholder="Email"
+                                value={this.state.email} 
+                                name="email" 
+                                onChange={this.handleChange} />
                         </div>
                     </div>
                     <div className="form-group">
-                        <input type="password" className="form-control" placeholder="Password" value={this.state.password} name="password" onChange={this.handleChange} />
+                        <input type="password"
+                            className="form-control"
+                            placeholder="Password"
+                            value={this.state.password} 
+                            name="password" 
+                            onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
-                        <input type="password" className="form-control" placeholder="Confirm Password" value={this.state.passwordConf} name="passwordConf" onChange={this.handleChange} />
+                        <input type="password"
+                            className="form-control"
+                            placeholder="Confirm Password"
+                            value={this.state.passwordConf} 
+                            name="passwordConf" 
+                            onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
                         <button disabled={this.isFormInvalid()}>Sign Up</button>&nbsp;&nbsp;

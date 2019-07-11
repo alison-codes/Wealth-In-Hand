@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './SecondPage.css';
 var Finance = require('financejs');
 
+
 class SecondPage extends React.Component {
   constructor(props) {
     super(props);

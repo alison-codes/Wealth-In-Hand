@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Dashboard from '../../components/Dashboard/Dashboard';
-// import debtService from '../../utils/debtService';
+import debtService from '../../utils/debtService';
 import './DashboardPage.css';
 
 

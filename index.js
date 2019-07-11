@@ -13,18 +13,6 @@ let resource = {
   values,
 };
 
-// export default {
-//   retrieveSheetData,
-// };
-
-module.exports = {
-  SSS,
-}
-
-function SSS() {
-  console.log("ssssss")
-}
-
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'token.json';
 const spreadsheetId = '1IAClT5484iFG6ByNMRmjoSUXYByDlIIiOwKtJ5KIJq8'

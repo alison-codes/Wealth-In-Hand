@@ -2,10 +2,8 @@
 function setToken(token) {
     if (token) {
         localStorage.setItem('token', token);
-        console.log('token created 1')
     } else {
         localStorage.removeItem('token');
-        console.log('token created 2')
     }
 }
 
