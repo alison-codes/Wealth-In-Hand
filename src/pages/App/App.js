@@ -4,6 +4,14 @@ import DashboardPage from '../../pages/DashboardPage/DashboardPage';
 import LandingPage from '../../pages/LandingPage/LandingPage';
 import { Route, Switch } from 'react-router-dom';
 import SecondPage from '../SecondPage/SecondPage';
+import NavBar from '../../components/NavBar/NavBar';
+import SignupPage from '../SignupPage/SignupPage';
+import LoginPage from '../LoginPage/LoginPage';
+import userService from '../../utils/userService';
+import tokenService from '../../utils/tokenService';
+
+import googleSheets from '../../googleSheets'
+
 
 // import amortization from '../../utils/amortization'
 
@@ -13,31 +21,61 @@ class App extends Component {
     this.state = {
       debtList: [],
       debts: [{ name: 'app.jsTestName' }],
-      user: null,
+      user: userService.getUser(),
+      sampleAPR: .1,
     };
     this.handleAmountChange = this.handleAmountChange.bind(this);
     // amortization.calculateTotalPayments();
+    // googleSheets.sayHelloInEnglish();
+    googleSheets.SSS();
+  }
+
+  handleLogout = () => {
+    userService.logout();
+    this.setState({ user: null });
+  }
+  handleSignupOrLogin = () => {
+    this.setState({ user: userService.getUser() });
   }
   handleAmountChange(debt) {
     this.setState({ debt });
   }
-  // async componentDidMount(){
-  //   let debtList = await fetch('/api/debts').then(res => res.json());
-  //   this.setState({ debtList })
-  // }
+
+  //Lifecycle Methods
+
+  async componentDidMount() {
+    let debtList = await fetch('/api/debts').then(res => res.json());
+    this.setState({ debtList })
+  }
   render() {
     return (
       <div>
         <header className="App-header">Wealth In Hand</header>
         <main className="App">
+          <NavBar 
+          user={this.state.user}
+          handleLogout={this.handleLogout}
+          />
           <Switch>
             <Route exact path='/' render={() =>
               <LandingPage />
             } />
+            <Route exact path='/signup' render={({ history }) =>
+              <SignupPage
+                history={history}
+                handleSignupOrLogin={this.handleSignupOrLogin}
+              />
+            } />
+            <Route exact path='/login' render={({ history }) => 
+            <LoginPage
+              history={history}
+              handleSignupOrLogin={this.handleSignupOrLogin}
+            />
+          }/>
             <Route exact path='/dashboard' render={() =>
               <DashboardPage
-                debts={this.state.debts} 
-                debtList={this.state.debts}/>
+                debts={this.state.debts}
+                debtList={this.state.debtList} />
             } />
             <Route exact path='/secondpage' render={props =>
               <SecondPage

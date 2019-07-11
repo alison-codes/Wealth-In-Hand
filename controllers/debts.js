@@ -2,7 +2,9 @@ var Debt = require('../models/debt');
 
 module.exports = {
   showDebts,
-  create,
+  createDebt,
+  editDebt,
+  deleteDebt
 };
 
 function showDebts(req, res) {
@@ -12,9 +14,17 @@ function showDebts(req, res) {
   });
 }
 
-function create(req, res) {
+function createDebt(req, res) {
   console.log('creating')
   postMessage.create(req.body, function (err, debt) {
     console.log(debt);
   })
+}
+
+function editDebt (req, res) {
+  return;
+}
+
+function deleteDebt (req, res) {
+  return;
 }

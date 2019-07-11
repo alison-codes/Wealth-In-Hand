@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Greeting from '../../components/Greeting/Greeting';
 
 
 const LandingPage = (props) => {
@@ -9,7 +10,7 @@ const LandingPage = (props) => {
       <Link to="/dashboard">
       Open Dashboard
       </Link>
-
+    <Greeting />
      
     </div>
   );
