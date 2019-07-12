@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const debtsCtrl = require('../../controllers/debts');
 
-/*---------- Protected Routes ----------*/
+// Protected Route
 router.use(require('../../config/auth'));
 router.get('/', debtsCtrl.showDebts);
-router.post('/', checkAuth,  debtsCtrl.createDebt);
+router.post('/', checkAuth, debtsCtrl.createDebt);
 
 
 function checkAuth(req, res, next) {

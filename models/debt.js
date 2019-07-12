@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const debtSchema = new Schema({
   name: String,
+  balance: Number,
 }, {
   timestamps: true
 });

@@ -15,7 +15,7 @@ let resource = {
 
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'token.json';
-const spreadsheetId = '1IAClT5484iFG6ByNMRmjoSUXYByDlIIiOwKtJ5KIJq8'
+const spreadsheetId = '1IAClT5484iFG6ByNMRmjoSUXYByDlIIiOwKtJ5KIJq8';
 
 // Load client secrets from a local file.
 fs.readFile('credentials.json', (err, content) => {
@@ -112,5 +112,6 @@ function updateSheetData(auth) {
       retrieveSheetData(auth);
     }
   });
+  updateSheet(formData);
 }
 
