@@ -47,13 +47,14 @@ class App extends Component {
     this.setState({ user: userService.getUser() })
   }
 
-  render() {
+   render() {
     const debtList = this.state.debtList.map((debts, idx) => (
       <li key={idx}>{debts.name}:${debts.balance} owed</li>
     ));
     return (
       <div className="App">
-        <header className="App-header">Wealth In Hand
+        <header className="App-header">
+        <img className="App-logo" src="https://static.wixstatic.com/media/fc6bf7_e3adb2670cbb46f4be97152ee68f8901~mv2.png/v1/crop/x_20,y_0,w_733,h_333/fill/w_352,h_160,al_c,q_80,usm_0.66_1.00_0.01/WIH-word-whit.webp" alt="WEALTH IN HAND" />
         <NavBar
             user={this.state.user}
             handleLogout={this.handleLogout}

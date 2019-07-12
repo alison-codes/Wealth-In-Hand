@@ -1,5 +1,6 @@
 var Debt = require('../models/debt');
 var googleSheets = require('../services/google-sheets-api');
+const User = require("../models/user");
 
 module.exports = {
   showDebts,
@@ -17,7 +18,12 @@ function showDebts(req, res) {
 }
 
 function createDebt(req, res) {
-  console.log('updating sheet online');
+//   User.findById(req.user._id).then(async user => {
+    
+    
+//   });
+// }
+
   console.log('creating');
   console.log('user: ', req.user);
   Debt.create(req.body, function (err, debt) {

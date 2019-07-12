@@ -49,15 +49,19 @@ function updateSheet(formData) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log('Cells updated!!!!');
+                    console.log('Cells updated.');
                 }
             });
         });
     });
-    retrieveSheetData(formData);
+    // Wait for Google sheet online to run calculations before retrieving results
+    setTimeout(function () {
+        retrieveSheetData(this.formData);
+    }, 500);
 }
 
 function retrieveSheetData(formData) {
+    let rows;
     fs.readFile('credentials.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         authorize(JSON.parse(content), function (auth) {
@@ -69,16 +73,93 @@ function retrieveSheetData(formData) {
                 if (err) return console.log('The API returned an error: ' + err);
                 const rows = res.data.values;
                 if (rows.length) {
-                    rows.map((row) => {
-                        console.log(`months to pay off = ${row[1]}`);
-                        console.log(`paid off by = ${row[2]}`);
-                        console.log(`total interest paid = ${row[0]}`);
-                    });
+                    // rows.map((row) => {
+                    //     console.log(`months to pay off = ${row[1]}`);
+                    //     console.log(`paid off by = ${row[2]}`);
+                    //     console.log(`total interest paid = ${row[0]}`);
+                    //     let interest = row[0];
+                    //     return interest;
+                    // });
+                    // console.log(rows);
+                    return rows;
                 } else {
                     console.log('No data found.');
                 }
             });
         });
+
     });
-    // return;
 }
+
+
+// function updateSheet(formData) {
+//     let range = 'Editable Form!C9';
+//     // console.log(formData.balance.substring(1, formData.balance.length))
+//     let valueInputOption = 'RAW';
+//     let apr = .2;
+//     let payment = 200;
+//     let balance = parseInt(formData.balance);
+//     ///take user inputs from the form and send them to the spreadsheet
+//     let values = [[balance, apr, payment]];
+//     let resource = {
+//         values,
+//     };
+//     fs.readFile('credentials.json', (err, content) => {
+//         if (err) return console.log('Error loading client secret file:', err);
+//         authorize(JSON.parse(content), function (auth) {
+//             console.log('Google API update Is running from google-sheets-api');
+//             const sheets = google.sheets({ version: 'v4', auth });
+//             sheets.spreadsheets.values.update({
+//                 spreadsheetId,
+//                 range,
+//                 valueInputOption,
+//                 resource
+//             }, (err, result) => {
+//                 if (err) {
+//                     console.log(err);
+//                 } else {
+//                     console.log('Cells updated!!!!');
+//                 }
+//             });
+//         });
+//     });
+//     return 1;
+// }
+
+// async function retrieveSheetData(formData) {
+//     const sheet = await updateSheet(formData);
+//     let range = 'Editable Form!C9';
+//     // console.log(formData.balance.substring(1, formData.balance.length))
+//     let valueInputOption = 'RAW';
+//     let apr = .2;
+//     let payment = 200;
+//     let balance = parseInt(formData.balance);
+//     ///take user inputs from the form and send them to the spreadsheet
+//     let values = [[balance, apr, payment]];
+//     let resource = {
+//         values,
+//     };
+//    fs.readFile('credentials.json', (err, content) => {
+//         if (err) return console.log('Error loading client secret file:', err);
+//         authorize(JSON.parse(content), function (auth) {
+//             const sheets = google.sheets({ version: 'v4', auth });
+//             sheets.spreadsheets.values.get({
+//                 spreadsheetId: spreadsheetId,
+//                 range: 'Editable Form!D29:F29',
+//             }, (err, res) => {
+//                 if (err) return console.log('The API returned an error: ' + err);
+//                 const rows = res.data.values;
+//                 if (rows.length) {
+//                     rows.map((row) => {
+//                         console.log(`months to pay off = ${row[1]}`);
+//                         console.log(`paid off by = ${row[2]}`);
+//                         console.log(`total interest paid = ${row[0]}`);
+//                     });
+//                 } else {
+//                     console.log('No data found.');
+//                 }
+//             });
+//         });
+//     });
+//     // return;
+// }

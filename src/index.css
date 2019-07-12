@@ -12,15 +12,6 @@ code {
     monospace;
 }
 
-:root {
-  --blue-green: #7Dcaac;
-  --dark-green: #6a8d5a;
-  --light-green: #a6c48d;
-  --orange: #faab6b;
-  --peach: #f5e7cd;
-  --headings-font-family: 'Carrois Gothic SC', sans-serif;
-  --main-text-font-family: 'Source Serif Pro', serif;
-}
 
 div {
   font-family: var(---headings-font-family);

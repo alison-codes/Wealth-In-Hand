@@ -1,3 +1,15 @@
+:root {
+  --blue-green: #7Dcaac;
+  --dark-green: #6a8d5a;
+  --light-green: #a6c48d;
+  --orange: #faab6b;
+  --peach: #f5e7cd;
+  --headings-font-family: 'Carrois Gothic SC', sans-serif;
+  --main-text-font-family: 'Source Serif Pro', serif;
+  --input-padding-x: 1.5rem;
+  --input-padding-y: .75rem;
+}
+
 main {
   display: flex;
   min-height: 90vh;
@@ -15,7 +27,7 @@ main {
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: var(--blue-green);
   min-height: 10vh;
   display: flex;
   flex-direction: column;
@@ -25,8 +37,10 @@ main {
   color: white;
 }
 
+
+
 .App-footer {
-  background-color: #282c34;
+  background-color: var(--blue-green);
   height: 30px;
   display: flex;
   align-items: center;
@@ -37,8 +51,14 @@ main {
   margin-top: calc(-10vmin);;
 }
 
+.App-logo {
+  height: 100px;
+  padding: 5px;
+}
+
+
 .App-link {
-  color: #61dafb;
+  color: var(--dark-green);
 }
 
 

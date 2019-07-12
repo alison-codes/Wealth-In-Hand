@@ -1,0 +1,74 @@
+.btn:hover {
+  background-color: var(--peach);
+  border-color: var(--peach);
+  color: black;
+}
+
+.btn, .btn:disabled:hover{
+  background-color: var(--orange);
+  border-color: var(--orange);
+  color: white;
+  margin-bottom: 10px;
+}
+
+.card-signin {
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+  
+.card-signin .card-title {
+    margin-bottom: 2rem;
+    font-weight: 300;
+    font-size: 30px;
+}
+  
+.card-signin .card-body {
+    padding: 2rem;
+    margin: 40px;
+    min-height: 300px;
+}
+
+.card-signin-signup {
+  min-height: 380px;
+}
+
+  
+.form-signin {
+    width: 100%;
+}
+  
+.form-signin .btn {
+    font-size: 80%;
+    border-radius: 1rem;
+    letter-spacing: .1rem;
+    font-weight: bold;
+    padding: 1rem;
+    transition: all 0.2s;
+}
+  
+.form-label-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+  
+ .form-label-group input {
+    height: auto;
+    border-radius: 1rem;
+}
+  
+
+.form-label-group>label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    margin-bottom: 0;
+    line-height: 1.5;
+    color: #495057;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    transition: all .1s ease-in-out;
+}
+

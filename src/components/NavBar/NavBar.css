@@ -5,7 +5,14 @@
 
 .NavBar-link {
   font-size: 24px;
+  color: var(--dark-green);
 }
+
+
+.NavBar-link:hover {
+  color: var(--dark-green);
+}
+
 
 .NavBar-line {
   font-size: 24px
