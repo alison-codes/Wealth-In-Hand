@@ -13,15 +13,18 @@ class App extends Component {
     debtList: [],
     newDebt: {
       name: '',
-      balance: '',
     },
     user: userService.getUser(),
-    apr: .1,
   }
 
+
   async componentDidMount() {
-    let debtList = await getAllDebts();
-    this.setState({ debtList });
+    // let debtList = [];
+    if (this.state.user) {
+      let debtList = await getAllDebts();
+      console.log(debtList);
+      this.setState({ debtList });
+    } 
   }
 
   handleGoogleUpdate = (e) => {
@@ -49,7 +52,8 @@ class App extends Component {
 
    render() {
     const debtList = this.state.debtList.map((debts, idx) => (
-      <li key={idx}>{debts.name}:${debts.balance} owed</li>
+      //TODO modify how data is stored
+      <li key={idx}>{debts.name}:${debts.balance} owed<div>Paid off {debts.monthPaidOff}  </div></li>
     ));
     return (
       <div className="App">
