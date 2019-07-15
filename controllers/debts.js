@@ -15,7 +15,7 @@ function showDebts(req, res) {
         user_id: req.user._id
     }, function (err, debts) {
         if (err) res.status(400).json(err);
-        console.log(`showing debts`, debts[debts.length - 1]);
+        // console.log(`showing debts`, debts[debts.length - 1]);
         res.status(200).json(debts);
     });
 }
@@ -24,8 +24,10 @@ async function createDebt(req, res) {
     googleSheets.updateSheet(req.body);
     req.body.user_id = req.user;
     setTimeout(function () {
-        console.log(googleSheets.rows);
+        // console.log(googleSheets.rows);
         req.body.monthPaidOff = googleSheets.rows.data[0][[2]];
+        req.body.monthsremaining = googleSheets.rows.data[0][[1]];
+        req.body.totalInterest =  googleSheets.rows.data[0][[0]];
         //TODO add additional data points from sheet to model and parse int as necessary
         Debt.create(
             req.body, function (err, debt) {
@@ -34,7 +36,8 @@ async function createDebt(req, res) {
                 // check on line below
                 // res.status(200).json(debt);
             });
-    }, 2000);
+        showDebts(req, res);
+    }, 4000);
     // console.log(googleSheets.rows)
     // // Wait for sheets to run calculations then return figures
     // // setTimeout(() => console.log(hello), 3000);

@@ -20,7 +20,7 @@ class LoginPage extends Component {
         try {
             await userService.login(this.state);
             this.props.handleSignupOrLogin();
-            this.props.history.push('/');
+            this.props.history.push('/dashboard');
         } catch (err) {
             alert('Invalid Credentials. Please try again.');
             // this.props.updateMessage('Invalid Credentials');

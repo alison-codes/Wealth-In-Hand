@@ -3,8 +3,8 @@ import Chart from '../Chart/Chart';
 
 const Dashboard = (props) => (
   <div className="DashboardPage-component">
-    Dashboard
-      <Chart />
+    {/* Dashboard
+      <Chart /> */}
    
   </div>
 );

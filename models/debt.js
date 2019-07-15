@@ -11,6 +11,8 @@ const debtSchema = new Schema({
         type: String,
         required: true,
     },
+    minimumPayment:  Number,
+    apr:  Number,
     monthPaidOff: String,
     monthsremaining: Number,
     totalInterest: Number,

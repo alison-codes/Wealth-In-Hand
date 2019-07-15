@@ -60,6 +60,7 @@ class SignupForm extends Component {
                                         value={this.state.email}
                                         name="email"
                                         onChange={this.handleChange} />
+                                        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> 
                                 </div>
                             </div>
                             <div className="form-group">
@@ -87,7 +88,7 @@ class SignupForm extends Component {
                             <div className="form-label-group">
                                 <div className="col-sm-12 text-center">
                                     <button
-                                    className="btn btn-lg btn-primary btn-block text-uppercase"
+                                    className="btn btn-lg btn-success btn-block text-uppercase"
                                         disabled={this.isFormInvalid()}>Sign Up</button>&nbsp;&nbsp;
                         <Link to='/'>Cancel</Link>
                                 </div>

@@ -25,8 +25,8 @@ function authorize(credentials, callback) {
 function updateSheet(formData) {
     let range = 'Editable Form!C9';
     let valueInputOption = 'RAW';
-    let apr = .2;
-    let payment = 200;
+    let apr = parseInt(formData.apr)/100;
+    let payment = parseInt(formData.minimumPayment);
     let balance = parseInt(formData.balance);
     ///take user inputs from the form and send them to the spreadsheet
     let values = [[balance, apr, payment]];

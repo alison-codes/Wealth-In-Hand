@@ -29,7 +29,7 @@ export function createDebt(data) {
     },
     body: JSON.stringify(data)
   };
-  return fetch(BASE_URL, options).then(res => res.json());
+  return fetch(BASE_URL, options).then(res => res.json()).then(getAllDebts());
 }
 
 

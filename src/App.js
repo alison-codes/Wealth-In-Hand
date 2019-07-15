@@ -1,41 +1,45 @@
-import React, { Component } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import React, { Component, PureComponent } from 'react';
+import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import userService from './utils/userService';
 import { getAllDebts, createDebt, updateGoogleSheet } from './utils/debtFormService';
 import SignUpPage from './pages/SignupPage/SignupPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import NavBar from './components/NavBar/NavBar';
+import DashboardPage from './pages/DashboardPage/DashboardPage';
 
 import './App.css';
+
 
 class App extends Component {
   state = {
     debtList: [],
     newDebt: {
-      name: '',
     },
     user: userService.getUser(),
   }
 
 
   async componentDidMount() {
-    // let debtList = [];
     if (this.state.user) {
       let debtList = await getAllDebts();
       console.log(debtList);
       this.setState({ debtList });
-    } 
+    }
   }
 
+  //  handleGoogleUpdate(e) {
+  //   // let debtList = [];
+  // // setTimeout(() =>   this.setState( getAllDebts() ), 9000); 
+  //   return createDebt(this.state.newDebt);
+  // }
+
   handleGoogleUpdate = (e) => {
-    // e.preventDefault();
     createDebt(this.state.newDebt);
   }
 
   handleChange = (e) => {
     let newDebt = { ...this.state.newDebt }
     newDebt[e.target.name] = e.target.value;
-
     this.setState({
       newDebt,
     })
@@ -50,21 +54,22 @@ class App extends Component {
     this.setState({ user: userService.getUser() })
   }
 
-   render() {
-    const debtList = this.state.debtList.map((debts, idx) => (
-      //TODO modify how data is stored
-      <li key={idx}>{debts.name}:${debts.balance} owed<div>Paid off {debts.monthPaidOff}  </div></li>
-    ));
+  render() {
+    // const debtList = this.state.debtList.map((debts, idx) => (
+    //   //TODO modify how data is stored
+    //   <li key={idx}>{debts.name}:${debts.balance} owed<div>Paid off {debts.monthPaidOff}  </div></li>
+    // ));
     return (
       <div className="App">
         <header className="App-header">
-        <img className="App-logo" src="https://static.wixstatic.com/media/fc6bf7_e3adb2670cbb46f4be97152ee68f8901~mv2.png/v1/crop/x_20,y_0,w_733,h_333/fill/w_352,h_160,al_c,q_80,usm_0.66_1.00_0.01/WIH-word-whit.webp" alt="WEALTH IN HAND" />
-        <NavBar
+          <img className="App-logo" src="https://static.wixstatic.com/media/fc6bf7_e3adb2670cbb46f4be97152ee68f8901~mv2.png/v1/crop/x_20,y_0,w_733,h_333/fill/w_352,h_160,al_c,q_80,usm_0.66_1.00_0.01/WIH-word-whit.webp" alt="WEALTH IN HAND" />
+          <NavBar
             user={this.state.user}
             handleLogout={this.handleLogout}
           />
         </header>
         <main className="App">
+
 
           <Switch>
             <Route exact path="/signup" render={({ history }) =>
@@ -79,21 +84,91 @@ class App extends Component {
                 handleSignupOrLogin={this.handleSignupOrLogin}
               />
             } />
+            <Route exact path='/dashboard' render={() =>
+              userService.getUser() ?
+                <DashboardPage
+                  debtList={this.state.debtList}
+                  handleChange={this.handleChange}
+
+                />
+                :
+                <Redirect to='/login' />
+            } />
           </Switch>
-          {this.state.user && debtList.length ?
+          {this.state.user ?
             <div>
-              <h2> List of what you owe</h2>
-              <ol>
-                {debtList}
-              </ol>
+              <div className="container">
+                <div className="card card-signin my-5">
+                  <div className="card-body">
+
+                    <form onSubmit={this.handleGoogleUpdate}>
+
+                      <div className="field-wrapper">
+                        <h2> Tell us about your debt</h2>
+                        <label>Name</label>
+                        <input
+                          className="form-control"
+                          placeholder="Chase Saphire Card"
+                          name='name'
+                          type='text'
+                          onChange={this.handleChange}
+                          value={this.state.newDebt.name} />
+                        <br></br>
+                      </div>
+                      <label>How much do you currently owe?</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input
+                          className="form-control"
+                          placeholder="10,000"
+                          name='balance'
+                          type='number'
+                          onChange={this.handleChange}
+                          value={this.state.newDebt.balance} />
+                        <span class="input-group-addon">.00</span>
+                      </div>
+                      <br></br>
+
+                      <label>What's the interest rate?</label>
+
+                      <div class="input-group">
+                        <input
+                          className="form-control"
+                          placeholder="7.5"
+                          name='apr'
+                          type='number'
+                          onChange={this.handleChange}
+                          value={this.state.newDebt.apr} />
+                        <span class="input-group-addon">%</span>
+                      </div>
+                      <br></br>
+
+                      <label>What's the minimum monthly payment on this debt?</label>
+
+                      <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input
+                          placeholder="100"
+                          className="form-control"
+                          name='minimumPayment'
+                          type='number'
+                          onChange={this.handleChange}
+                          value={this.state.newDebt.minimumPayment} />
+                        <span class="input-group-addon">.00</span>
+                      </div>
+                      <br></br>
+                      <input type='submit' className="btn btn-success" value='Submit' />
+                    </form>
+                  </div>
+                </div>
+              </div>
             </div>
             :
-            <h4>We don't know enougth about your debts to provide you with guidance</h4>
+            <h4>Logged out</h4>
           }
           <br />
 
-
-          {this.state.user &&
+          {/* {this.state.user &&
             <form onSubmit={this.handleGoogleUpdate}>
               <div className="field-wrapper">
                 <label>Name</label>
@@ -112,7 +187,7 @@ class App extends Component {
               </div>
               <input type='submit' value='Submit' />
             </form>
-          }
+          } */}
 
         </main>
         <footer className="App-footer">

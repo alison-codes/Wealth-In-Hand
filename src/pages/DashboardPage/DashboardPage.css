@@ -1,0 +1,40 @@
+svg {
+    /* width: 500px; */
+    display: inline;
+    display: flex;
+    text-align: center;
+}
+
+path{
+    width: 400px;
+    display: inline;
+    text-align: center;
+}
+
+.recharts-surface{
+    /* width: 400px;  */
+    text-align: center;
+}
+
+.recharts-sector{
+    width: 300px; 
+    height: 300px; 
+    text-align: center;
+}
+
+#root > div > main > div.DashboardPage-component > div:nth-child(2) > div > div > div > ol > div > div > svg > g {
+  text-align: center;
+  display: inline;
+}
+
+#root > div > main > div.DashboardPage-component > div:nth-child(2) > div > div > div > ol > div > div > svg > g > g > g:nth-child(1) > path {
+    text-align: center;
+    display: inline;
+
+}
+
+#root > div > main > div.DashboardPage-component > div:nth-child(2) > div > div > div > ol > div > div > svg {
+    text-align: center;
+    display: inline;
+}
+

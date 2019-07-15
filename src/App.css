@@ -10,10 +10,16 @@
   --input-padding-y: .75rem;
 }
 
+
+a:visited {
+  color: var(--dark-green)
+}
+
 main {
   display: flex;
-  min-height: 90vh;
+  flex: 1 0 auto;
   flex-direction: column;
+  min-height: calc(90vmin - 35px);
 }
 
 .App {
@@ -41,14 +47,14 @@ main {
 
 .App-footer {
   background-color: var(--blue-green);
-  height: 30px;
+  height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  padding-top: 0;
-  margin-top: calc(-10vmin);;
+  padding: 0;
+  margin-top: -40px;;
 }
 
 .App-logo {
