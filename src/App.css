@@ -43,15 +43,14 @@ main {
   color: white;
 }
 
-
-
+/* TODO fix footer */
 .App-footer {
   background-color: var(--blue-green);
   height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 20px;
   color: white;
   padding: 0;
   margin-top: -40px;;
@@ -74,15 +73,15 @@ img {
 }
 
 
-main > div > section > div {
+main > div > section > div, li > div.text-center > div {
   align-self:  center;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-
 }
-
 
 .LandingChart-rechart {
   margin: 40px 10px; 
 }
+
+

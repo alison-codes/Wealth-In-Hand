@@ -1,5 +1,4 @@
-svg {
-    /* width: 500px; */
+/* svg {
     display: inline;
     display: flex;
     text-align: center;
@@ -12,29 +11,32 @@ path{
 }
 
 .recharts-surface{
-    /* width: 400px;  */
     text-align: center;
-}
+} */
 
+/* 
 .recharts-sector{
     width: 300px; 
     height: 300px; 
     text-align: center;
-}
+} */
 
-#root > div > main > div.DashboardPage-component > div:nth-child(2) > div > div > div > ol > div > div > svg > g {
-  text-align: center;
-  display: inline;
-}
-
-#root > div > main > div.DashboardPage-component > div:nth-child(2) > div > div > div > ol > div > div > svg > g > g > g:nth-child(1) > path {
-    text-align: center;
-    display: inline;
-
-}
-
-#root > div > main > div.DashboardPage-component > div:nth-child(2) > div > div > div > ol > div > div > svg {
+.DashboardPage-component>div:nth-child(2)>div>div>div>ol>div>div>svg>g {
     text-align: center;
     display: inline;
 }
 
+.DashboardPage-component>div:nth-child(2)>div>div>div>div>div>div>div:nth-child(2)>div {
+    align-self: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.DashboardPage-component > div:nth-child(2) > div > div > div > div > div > div > div:nth-child(2) > div > svg  {
+    margin-top: -50px;
+}
+
+.col-6 {
+    display: inline;
+}

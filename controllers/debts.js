@@ -5,7 +5,6 @@ module.exports = {
     showDebts,
     createDebt,
     updateGoogleSheet,
-    editDebt,
     deleteDebt,
 };
 
@@ -29,20 +28,19 @@ async function showDebts(req, res) {
 }
 
 async function createDebt(req, res) {
+    // const debt = new Debt(req.body);
     googleSheets.updateSheet(req.body);
     req.body.user_id = req.user;
     setTimeout(function () {
-        // console.log(googleSheets.rows);
         req.body.monthPaidOff = googleSheets.rows.data[0][[2]];
-        req.body.monthsremaining = googleSheets.rows.data[0][[1]];
-        req.body.totalInterest = googleSheets.rows.data[0][[0]];
-        //TODO add additional data points from sheet to model and parse int as necessary
+        req.body.monthsremaining = parseFloat(googleSheets.rows.data[0][[1]].replace(',', ''));
+        req.body.totalInterest = parseFloat(googleSheets.rows.data[0][[0]].replace(',', ''))>0 ? parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')) : Infinity;
+        // TODO handle negative amortized debts console.log(googleSheets.rows.data[0][[0]]>0)
         Debt.create(
             req.body, function (err, debt) {
                 console.log(debt);
                 if (err) throw err;
-                // check on line below
-                // res.status(200).json(debt);
+                res.json(debt);
             });
     }, 4000)
     // console.log(googleSheets.rows)
@@ -64,11 +62,6 @@ function updateGoogleSheet(req, res) {
     console.log('updating sheet online');
     googleSheets.updateSheet(req.body);
     res.json({ msg: 'Updated sheet' });
-}
-
-// TODO determine if I want to keep or toss this function for MVP
-function editDebt(req, res) {
-    return;
 }
 
 function deleteDebt(req, res) {

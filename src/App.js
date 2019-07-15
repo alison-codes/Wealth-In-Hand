@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import NavBar from './components/NavBar/NavBar';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import LandingChart from './components/LandingChart/LandingChart';
+import DebtInfo from './components/DebtInfo/DebtInfo';
 
 
 import './App.css';
@@ -15,6 +16,7 @@ import './App.css';
 class App extends Component {
   state = {
     debtList: [],
+    //TODO delete newDebt and references
     newDebt: {
     },
     user: userService.getUser(),
@@ -35,8 +37,26 @@ class App extends Component {
   //   return createDebt(this.state.newDebt);
   // }
 
-  handleGoogleUpdate = (e) => {
-    createDebt(this.state.newDebt);
+  // old version
+  // handleGoogleUpdate = (e) => {
+  //   e.preventDefault();
+
+  //   // Save the result of createDebt to a variable (async/await)
+  //   createDebt(this.state.newDebt);
+
+  //   // With the saved result, update state
+  // }
+
+  handleGoogleUpdate = async (e) => {
+    e.preventDefault();
+    // Save the result of createDebt to a variable (async/await)
+    let newDebt = await createDebt(this.state.newDebt);
+    console.log(newDebt)
+    let debtList = [...this.state.debtList];
+    debtList.push(newDebt);
+    this.setState({ debtList });
+    getAllDebts();
+    // With the saved result, update state
   }
 
   handleChange = (e) => {
@@ -57,9 +77,13 @@ class App extends Component {
   }
   handleDeleteDebt = (debt) => {
     console.log("debt info", debt);
-    deleteDebt(debt).componentDidMount()
+    deleteDebt(debt);
+    let debtList = [...this.state.debtList];
+    debtList.pop(debt);
+    this.setState({ debtList });
+    getAllDebts();
   }
-  
+
   render() {
     // const debtList = this.state.debtList.map((debts, idx) => (
     //   //TODO modify how data is stored
@@ -108,7 +132,7 @@ class App extends Component {
                   <div className="card-body">
 
                     <form onSubmit={this.handleGoogleUpdate}>
-
+                      {/* TODO add front-end validation */}
                       <div className="field-wrapper">
                         <h2> Tell us about your debt</h2>
                         <label>Name</label>
@@ -163,7 +187,7 @@ class App extends Component {
                         <span className="input-group-addon">.00</span>
                       </div>
                       <br></br>
-                      <input type='submit' className="btn btn-success" value='Submit' />
+                      <input type='submit' className="btn btn-success" value='ADD A DEBT' />
                     </form>
                   </div>
                 </div>
@@ -171,9 +195,10 @@ class App extends Component {
             </div>
             :
             <div>
-            <LandingChart />
+              <LandingChart />
+              <DebtInfo />
             </div>
-           
+
           }
           <br />
 
