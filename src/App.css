@@ -72,3 +72,17 @@ img {
   height: 20px;
   display: inline-block;
 }
+
+
+main > div > section > div {
+  align-self:  center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+
+}
+
+
+.LandingChart-rechart {
+  margin: 40px 10px; 
+}

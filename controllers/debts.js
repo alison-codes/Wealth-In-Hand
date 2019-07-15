@@ -9,15 +9,23 @@ module.exports = {
     deleteDebt,
 };
 
-function showDebts(req, res) {
+async function showDebts(req, res) {
     // console.log('showDebts user: ', req.user);
-    Debt.find({
-        user_id: req.user._id
-    }, function (err, debts) {
-        if (err) res.status(400).json(err);
-        // console.log(`showing debts`, debts[debts.length - 1]);
+    // Debt.find({
+    //     user_id: req.user._id
+    // }, function (err, debts) {
+    //     if (err) res.status(400).json(err);
+    //     // console.log(`showing debts`, debts[debts.length - 1]);
+    //     res.status(200).json(debts);
+    // });
+    try {
+        let debts = await Debt.find({
+            user_id: req.user._id
+        });
         res.status(200).json(debts);
-    });
+    } catch (err) {
+        return res.status(400).json(err);
+    }
 }
 
 async function createDebt(req, res) {
@@ -27,7 +35,7 @@ async function createDebt(req, res) {
         // console.log(googleSheets.rows);
         req.body.monthPaidOff = googleSheets.rows.data[0][[2]];
         req.body.monthsremaining = googleSheets.rows.data[0][[1]];
-        req.body.totalInterest =  googleSheets.rows.data[0][[0]];
+        req.body.totalInterest = googleSheets.rows.data[0][[0]];
         //TODO add additional data points from sheet to model and parse int as necessary
         Debt.create(
             req.body, function (err, debt) {
@@ -36,8 +44,7 @@ async function createDebt(req, res) {
                 // check on line below
                 // res.status(200).json(debt);
             });
-        showDebts(req, res);
-    }, 4000);
+    }, 4000)
     // console.log(googleSheets.rows)
     // // Wait for sheets to run calculations then return figures
     // // setTimeout(() => console.log(hello), 3000);
@@ -59,10 +66,13 @@ function updateGoogleSheet(req, res) {
     res.json({ msg: 'Updated sheet' });
 }
 
+// TODO determine if I want to keep or toss this function for MVP
 function editDebt(req, res) {
     return;
 }
 
 function deleteDebt(req, res) {
-    return;
+    Debt.findByIdAndRemove(req.body.id, function(err){
+        res.json({deleted:true})
+    })
 }

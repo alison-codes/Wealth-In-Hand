@@ -6,7 +6,7 @@ const debtsCtrl = require('../../controllers/debts');
 router.use(require('../../config/auth'));
 router.get('/', checkAuth, debtsCtrl.showDebts);
 router.post('/', checkAuth, debtsCtrl.createDebt);
-
+router.delete('/', debtsCtrl.deleteDebt);
 
 function checkAuth(req, res, next) {
     if (req.user) return next();

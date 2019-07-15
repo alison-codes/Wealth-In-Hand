@@ -1,11 +1,13 @@
-import React, { Component, PureComponent } from 'react';
-import { Switch, Route, Link, Redirect } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import userService from './utils/userService';
-import { getAllDebts, createDebt, updateGoogleSheet } from './utils/debtFormService';
+import { getAllDebts, createDebt, updateGoogleSheet, deleteDebt } from './utils/debtFormService';
 import SignUpPage from './pages/SignupPage/SignupPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import NavBar from './components/NavBar/NavBar';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
+import LandingChart from './components/LandingChart/LandingChart';
+
 
 import './App.css';
 
@@ -53,7 +55,11 @@ class App extends Component {
   handleSignupOrLogin = () => {
     this.setState({ user: userService.getUser() })
   }
-
+  handleDeleteDebt = (debt) => {
+    console.log("debt info", debt);
+    deleteDebt(debt).componentDidMount()
+  }
+  
   render() {
     // const debtList = this.state.debtList.map((debts, idx) => (
     //   //TODO modify how data is stored
@@ -89,7 +95,7 @@ class App extends Component {
                 <DashboardPage
                   debtList={this.state.debtList}
                   handleChange={this.handleChange}
-
+                  handleDeleteDebt={this.handleDeleteDebt}
                 />
                 :
                 <Redirect to='/login' />
@@ -116,8 +122,8 @@ class App extends Component {
                         <br></br>
                       </div>
                       <label>How much do you currently owe?</label>
-                      <div class="input-group">
-                        <span class="input-group-addon">$</span>
+                      <div className="input-group">
+                        <span className="input-group-addon">$</span>
                         <input
                           className="form-control"
                           placeholder="10,000"
@@ -125,13 +131,13 @@ class App extends Component {
                           type='number'
                           onChange={this.handleChange}
                           value={this.state.newDebt.balance} />
-                        <span class="input-group-addon">.00</span>
+                        <span className="input-group-addon">.00</span>
                       </div>
                       <br></br>
 
                       <label>What's the interest rate?</label>
 
-                      <div class="input-group">
+                      <div className="input-group">
                         <input
                           className="form-control"
                           placeholder="7.5"
@@ -139,14 +145,14 @@ class App extends Component {
                           type='number'
                           onChange={this.handleChange}
                           value={this.state.newDebt.apr} />
-                        <span class="input-group-addon">%</span>
+                        <span className="input-group-addon">%</span>
                       </div>
                       <br></br>
 
                       <label>What's the minimum monthly payment on this debt?</label>
 
-                      <div class="input-group">
-                        <span class="input-group-addon">$</span>
+                      <div className="input-group">
+                        <span className="input-group-addon">$</span>
                         <input
                           placeholder="100"
                           className="form-control"
@@ -154,7 +160,7 @@ class App extends Component {
                           type='number'
                           onChange={this.handleChange}
                           value={this.state.newDebt.minimumPayment} />
-                        <span class="input-group-addon">.00</span>
+                        <span className="input-group-addon">.00</span>
                       </div>
                       <br></br>
                       <input type='submit' className="btn btn-success" value='Submit' />
@@ -164,7 +170,10 @@ class App extends Component {
               </div>
             </div>
             :
-            <h4>Logged out</h4>
+            <div>
+            <LandingChart />
+            </div>
+           
           }
           <br />
 

@@ -1,47 +1,48 @@
-import React, { Component, PureComponent } from 'react';
+import React, { Component } from 'react';
 import { PieChart, Pie, Sector, Cell, } from 'recharts';
 
 import { Link } from 'react-router-dom';
 import Dashboard from '../../components/Dashboard/Dashboard';
+import Chart from '../../components/Chart/Chart';
+
 // import debtService from '../../utils/debtService';
 import './DashboardPage.css';
 
 
-
 class DashboardPage extends Component {
-
   render() {
     const COLORS = ['#6a8d5a', '#00C49F', '#FFBB28', '#FF8042'];
-    const data = [
-      {  },
-      { },
-    ];
+    const data = [{}, {},];
     const debtList = this.props.debtList.map((debts, idx) => (
       <div>
+
         <li key={idx}>{debts.name}:${debts.balance} owed<div>Paid off {debts.monthPaidOff}  </div>
-        <div className="text-center">
+          <div className="text-center">
+            {/* <Chart 
+          balance={debts.balance}/> */}
+            <PieChart className="text-center" width={300} height={300} onMouseEnter={this.onPieEnter}>
 
-        <PieChart className="text-center" width={300} height={300} onMouseEnter={this.onPieEnter}>
+              <Pie className="text-center"
+                data={[
+                  { name: 'Amount paid to principal', value: debts.balance },
+                  { name: 'Amount paid to interest', value: debts.totalInterest },
+                ]}
+                cx={120}
+                cy={200}
+                innerRadius={60}
+                outerRadius={80}
+                fill="#8884d8"
+                paddingAngle={5}
+                dataKey="value"
+              >
+                {
+                  data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                }
+              </Pie>
+            </PieChart>
+          </div>
+          <button className="btn" onClick={()=> this.props.handleDeleteDebt(debts._id)}>DELETE</button>
 
-          <Pie className="text-center"
-            data={[
-              { name: 'Amount paid to principal', value: debts.balance },
-              { name: 'Amount paid to interest', value: debts.totalInterest },
-            ]}
-            cx={120}
-            cy={200}
-            innerRadius={60}
-            outerRadius={80}
-            fill="#8884d8"
-            paddingAngle={5}
-            dataKey="value"
-          >
-            {
-              data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
-            }
-          </Pie>
-        </PieChart>
-        </div>
         </li>
       </div>
     ));
