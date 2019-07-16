@@ -6,22 +6,16 @@ import SignUpPage from './pages/SignupPage/SignupPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import NavBar from './components/NavBar/NavBar';
 import DashboardPage from './pages/DashboardPage/DashboardPage';
-import LandingChart from './components/LandingChart/LandingChart';
-import DebtInfo from './components/DebtInfo/DebtInfo';
-
-
+import LandingPage from './pages/LandingPage/LandingPage';
 import './App.css';
 
 
 class App extends Component {
   state = {
     debtList: [],
-    //TODO delete newDebt and references
-    newDebt: {
-    },
+    newDebt: {},
     user: userService.getUser(),
   }
-
 
   async componentDidMount() {
     if (this.state.user) {
@@ -30,35 +24,16 @@ class App extends Component {
       this.setState({ debtList });
     }
   }
-
-  //  handleGoogleUpdate(e) {
-  //   // let debtList = [];
-  // // setTimeout(() =>   this.setState( getAllDebts() ), 9000); 
-  //   return createDebt(this.state.newDebt);
-  // }
-
-  // old version
-  // handleGoogleUpdate = (e) => {
-  //   e.preventDefault();
-
-  //   // Save the result of createDebt to a variable (async/await)
-  //   createDebt(this.state.newDebt);
-
-  //   // With the saved result, update state
-  // }
-
   handleGoogleUpdate = async (e) => {
+    //Updates the model data based on the Google API call
     e.preventDefault();
-    // Save the result of createDebt to a variable (async/await)
     let newDebt = await createDebt(this.state.newDebt);
-    console.log(newDebt)
     let debtList = [...this.state.debtList];
+    // With the saved result, update state
     debtList.push(newDebt);
     this.setState({ debtList });
     getAllDebts();
-    // With the saved result, update state
   }
-
   handleChange = (e) => {
     let newDebt = { ...this.state.newDebt }
     newDebt[e.target.name] = e.target.value;
@@ -66,29 +41,26 @@ class App extends Component {
       newDebt,
     })
   }
-
   handleLogout = () => {
     userService.logout();
     this.setState({ user: null });
   }
-
   handleSignupOrLogin = () => {
-    this.setState({ user: userService.getUser() })
+    this.setState({ user: userService.getUser() });
   }
   handleDeleteDebt = (debt) => {
-    console.log("debt info", debt);
     deleteDebt(debt);
     let debtList = [...this.state.debtList];
     debtList.pop(debt);
     this.setState({ debtList });
     getAllDebts();
   }
-
+  isFormInvalid() {
+    //Prevent user from submitting the add debt form without necessary info
+    return !(this.state.newDebt.balance && this.state.newDebt.apr && this.state.newDebt.minimumPayment);
+    getAllDebts();
+  }
   render() {
-    // const debtList = this.state.debtList.map((debts, idx) => (
-    //   //TODO modify how data is stored
-    //   <li key={idx}>{debts.name}:${debts.balance} owed<div>Paid off {debts.monthPaidOff}  </div></li>
-    // ));
     return (
       <div className="App">
         <header className="App-header">
@@ -99,8 +71,6 @@ class App extends Component {
           />
         </header>
         <main className="App">
-
-
           <Switch>
             <Route exact path="/signup" render={({ history }) =>
               <SignUpPage
@@ -124,18 +94,22 @@ class App extends Component {
                 :
                 <Redirect to='/login' />
             } />
+            <Route exact path="/" render={() =>
+              <LandingPage 
+              user={this.state.user}
+              />
+            } />
           </Switch>
           {this.state.user ?
             <div>
               <div className="container">
                 <div className="card card-signin my-5">
                   <div className="card-body">
-
                     <form onSubmit={this.handleGoogleUpdate}>
-                      {/* TODO add front-end validation */}
                       <div className="field-wrapper">
-                        <h2> Tell us about your debt</h2>
-                        <label>Name</label>
+                        {this.state.debtList[0] ? <h2 className="accent-text">Add another debt.</h2> : <h2 className="accent-text"> Don't be shy. Tell us about your debt.</h2>}
+                        <h4 className="text-muted">You might an idea of what your debt interest rate is, but by the time you’ve made payments, you may be shocked to see how much those interest payments have added onto your bill.</h4>
+                        <h5 className="text-left text-sm-left">Nickname for debt</h5>
                         <input
                           className="form-control"
                           placeholder="Chase Saphire Card"
@@ -145,7 +119,7 @@ class App extends Component {
                           value={this.state.newDebt.name} />
                         <br></br>
                       </div>
-                      <label>How much do you currently owe?</label>
+                      <h5 className="text-left text-sm-left">How much do you currently owe?</h5>
                       <div className="input-group">
                         <span className="input-group-addon">$</span>
                         <input
@@ -153,27 +127,26 @@ class App extends Component {
                           placeholder="10,000"
                           name='balance'
                           type='number'
+                          step='10'
                           onChange={this.handleChange}
                           value={this.state.newDebt.balance} />
                         <span className="input-group-addon">.00</span>
                       </div>
                       <br></br>
-
-                      <label>What's the interest rate?</label>
-
+                      <h5 className="text-left text-sm-left">What's the annual interest rate?</h5>
                       <div className="input-group">
                         <input
                           className="form-control"
                           placeholder="7.5"
                           name='apr'
                           type='number'
+                          step='0.01'
                           onChange={this.handleChange}
                           value={this.state.newDebt.apr} />
                         <span className="input-group-addon">%</span>
                       </div>
                       <br></br>
-
-                      <label>What's the minimum monthly payment on this debt?</label>
+                      <h5 className="text-left text-sm-left">What's the minimum monthly payment on this debt?</h5>
 
                       <div className="input-group">
                         <span className="input-group-addon">$</span>
@@ -187,42 +160,17 @@ class App extends Component {
                         <span className="input-group-addon">.00</span>
                       </div>
                       <br></br>
-                      <input type='submit' className="btn btn-success" value='ADD A DEBT' />
+                      <input
+                        type='submit'
+                        disabled={this.isFormInvalid()}
+                        className="btn btn-success"
+                        value='ANALYZE THIS DEBT'
+                      />
                     </form>
                   </div>
                 </div>
               </div>
-            </div>
-            :
-            <div>
-              <LandingChart />
-              <DebtInfo />
-            </div>
-
-          }
-          <br />
-
-          {/* {this.state.user &&
-            <form onSubmit={this.handleGoogleUpdate}>
-              <div className="field-wrapper">
-                <label>Name</label>
-                <input
-                  name='name'
-                  type='text'
-                  onChange={this.handleChange}
-                  value={this.state.newDebt.name} />
-                <br></br>
-                <label>Balance</label>
-                <input
-                  name='balance'
-                  type='number'
-                  onChange={this.handleChange}
-                  value={this.state.newDebt.balance} />
-              </div>
-              <input type='submit' value='Submit' />
-            </form>
-          } */}
-
+            </div> : <div> </div>} <br />
         </main>
         <footer className="App-footer">
           <a href="https://www.linkedin.com/company-beta/18112770/" target="_blank" rel="noopener noreferrer">
@@ -236,9 +184,7 @@ class App extends Component {
           </a>
           &nbsp;&nbsp;&nbsp; team@wealthinhand.com | San Francisco, CA
         </footer>
-
       </div>
-
     );
   }
 }

@@ -1,4 +1,7 @@
 .DebtInfo-text {
     text-align: left;
     margin: -50px 30px 50px 30px;
+    background: var(--blue-green);
+    margin: 0px;
+    padding: 30px 100px;
 }

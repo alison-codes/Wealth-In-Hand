@@ -36,7 +36,7 @@ async function login(req, res) {
     }
 }
 
-
+// Allow users to stay logged in for two days
 function createJWT(user) {
     return jwt.sign(
         { user },

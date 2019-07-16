@@ -8,15 +8,8 @@ module.exports = {
     deleteDebt,
 };
 
+//Display index of a user's created debts
 async function showDebts(req, res) {
-    // console.log('showDebts user: ', req.user);
-    // Debt.find({
-    //     user_id: req.user._id
-    // }, function (err, debts) {
-    //     if (err) res.status(400).json(err);
-    //     // console.log(`showing debts`, debts[debts.length - 1]);
-    //     res.status(200).json(debts);
-    // });
     try {
         let debts = await Debt.find({
             user_id: req.user._id
@@ -28,44 +21,32 @@ async function showDebts(req, res) {
 }
 
 async function createDebt(req, res) {
-    // const debt = new Debt(req.body);
     googleSheets.updateSheet(req.body);
     req.body.user_id = req.user;
+    // Wait for sheets to run calculations then return figures
     setTimeout(function () {
-        req.body.monthPaidOff = googleSheets.rows.data[0][[2]];
+        // Use values from cells on sheet to create model instance
+        req.body.monthPaidOff = googleSheets.rows.data[0][[2]] ? googleSheets.rows.data[0][[2]] : 'In the future';
         req.body.monthsremaining = parseFloat(googleSheets.rows.data[0][[1]].replace(',', ''));
-        req.body.totalInterest = parseFloat(googleSheets.rows.data[0][[0]].replace(',', ''))>0 ? parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')) : Infinity;
-        // TODO handle negative amortized debts console.log(googleSheets.rows.data[0][[0]]>0)
+        //If debt is not scheduled to be paid off within 30 years, set special value in instance equal to infinity
+        req.body.totalInterest = parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')) > 0 ? parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')) : Infinity;
         Debt.create(
             req.body, function (err, debt) {
                 console.log(debt);
                 if (err) throw err;
                 res.json(debt);
             });
-    }, 4000)
-    // console.log(googleSheets.rows)
-    // // Wait for sheets to run calculations then return figures
-    // // setTimeout(() => console.log(hello), 3000);
-    // // console.log('row2 ', googleSheets.rows);
-    // // req.body.monthPaidOff = googleSheets.rows.data[0][[2]];
-    // Debt.create(
-    //     req.body, function (err, debt) {
-    //         console.log(debt);
-    //         if (err) throw err;
-    //         // check on line below
-    //         res.status(200).json(debt);
-    //     })
-    // send req.body to Google sheets
+    }, 6000)
 }
 
+//Send req.body to Google sheets to replace cell  data 
 function updateGoogleSheet(req, res) {
-    console.log('updating sheet online');
     googleSheets.updateSheet(req.body);
     res.json({ msg: 'Updated sheet' });
 }
 
 function deleteDebt(req, res) {
-    Debt.findByIdAndRemove(req.body.id, function(err){
-        res.json({deleted:true})
+    Debt.findByIdAndRemove(req.body.id, function (err) {
+        res.json({ deleted: true })
     })
 }

@@ -10,9 +10,18 @@
   --input-padding-y: .75rem;
 }
 
+.accent-text {
+  font-size: 2.8rem !important;
+  font-weight: 700;
+  font-family: var(--headings-font-family)
+}
 
 a:visited {
-  color: var(--dark-green)
+  color: var(--dark-green);
+}
+
+h5, h2 {
+  padding:10px 0px;
 }
 
 main {
@@ -20,6 +29,14 @@ main {
   flex: 1 0 auto;
   flex-direction: column;
   min-height: calc(90vmin - 35px);
+}
+
+section {
+  font-size: 16px;
+}
+
+h5{
+  font-size: 14px;
 }
 
 .App {
@@ -53,7 +70,7 @@ main {
   font-size: 20px;
   color: white;
   padding: 0;
-  margin-top: -40px;;
+  margin-top: -20px;
 }
 
 .App-logo {
@@ -83,5 +100,3 @@ main > div > section > div, li > div.text-center > div {
 .LandingChart-rechart {
   margin: 40px 10px; 
 }
-
-

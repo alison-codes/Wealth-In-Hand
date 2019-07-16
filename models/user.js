@@ -17,7 +17,7 @@ const userSchema = new Schema({
     },
 }, {
         timestamps: true,
-    });
+});
 
 userSchema.set('toJSON', {
     // remove the password property when serializing doc to JSON

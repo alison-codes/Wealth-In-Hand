@@ -1,3 +1,5 @@
+//This page contains the required Google Sheets API actions
+
 const fs = require('fs');
 const { google } = require('googleapis');
 const spreadsheetId = '1IAClT5484iFG6ByNMRmjoSUXYByDlIIiOwKtJ5KIJq8';
@@ -25,10 +27,11 @@ function authorize(credentials, callback) {
 function updateSheet(formData) {
     let range = 'Editable Form!C9';
     let valueInputOption = 'RAW';
+    // Divide annual apr to decimal format
     let apr = parseInt(formData.apr)/100;
     let payment = parseInt(formData.minimumPayment);
     let balance = parseInt(formData.balance);
-    ///take user inputs from the form and send them to the spreadsheet
+    // Take user inputs from the form and send them to the spreadsheet
     let values = [[balance, apr, payment]];
     let resource = {
         values,
@@ -36,7 +39,7 @@ function updateSheet(formData) {
     fs.readFile('credentials.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
         authorize(JSON.parse(content), function (auth) {
-            console.log('Google API update Is running from google-sheets-api');
+            // If this line has executed, the Google API update function is running 
             const sheets = google.sheets({ version: 'v4', auth });
             sheets.spreadsheets.values.update({
                 spreadsheetId,
@@ -47,7 +50,6 @@ function updateSheet(formData) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log('Cells updated.');
                     retrieveSheetData();
                 }
             });
@@ -65,6 +67,7 @@ function retrieveSheetData() {
     });
 }
 
+//  Retrieve updated row data to be exported to controller directory 
 const getRows = async (sheets) => {
     await sheets.spreadsheets.values.get({
         spreadsheetId: spreadsheetId,
@@ -74,6 +77,5 @@ const getRows = async (sheets) => {
             console.error(err);
         }
         rows.data = result.data.values;
-        // console.log({ global: rows.data })
     });
 }

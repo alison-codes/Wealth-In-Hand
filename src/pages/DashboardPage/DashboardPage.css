@@ -1,26 +1,3 @@
-/* svg {
-    display: inline;
-    display: flex;
-    text-align: center;
-}
-
-path{
-    width: 400px;
-    display: inline;
-    text-align: center;
-}
-
-.recharts-surface{
-    text-align: center;
-} */
-
-/* 
-.recharts-sector{
-    width: 300px; 
-    height: 300px; 
-    text-align: center;
-} */
-
 .DashboardPage-component>div:nth-child(2)>div>div>div>ol>div>div>svg>g {
     text-align: center;
     display: inline;
@@ -37,6 +14,8 @@ path{
     margin-top: -50px;
 }
 
-.col-6 {
-    display: inline;
+
+.lead {
+    font-size: 20px;
+    font-family: var(--headings-font-family)
 }
