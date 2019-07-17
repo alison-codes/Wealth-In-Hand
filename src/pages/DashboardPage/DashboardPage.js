@@ -83,7 +83,7 @@ class DashboardPage extends Component {
     this.props.debtList.forEach(d => {
       totalDebtBurden += d.balance;
       numDebtsAdded += 1;
-      totalInterestBurden += d.totalInterest;
+      totalInterestBurden += parseInt(d.totalInterest) ;
     });
     return (
       <div className="DashboardPage-component">

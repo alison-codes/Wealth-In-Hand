@@ -29,7 +29,7 @@ async function createDebt(req, res) {
         req.body.monthPaidOff = googleSheets.rows.data[0][[2]] ? googleSheets.rows.data[0][[2]] : 'In the future';
         req.body.monthsremaining = parseFloat(googleSheets.rows.data[0][[1]].replace(',', ''));
         //If debt is not scheduled to be paid off within 30 years, set special value in instance equal to infinity
-        req.body.totalInterest = parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')) > 0 ? parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')) : Infinity;
+        req.body.totalInterest = parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')) > 0 ? parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')).toFixed( 2 ) : Infinity;
         Debt.create(
             req.body, function (err, debt) {
                 if (err) throw err;

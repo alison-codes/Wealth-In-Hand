@@ -7,7 +7,7 @@ Wealth In Hand is a financial wellness provider that brings education to employe
 
 ![Landing Page](https://i.imgur.com/iYAEPP6.png)
 
-![Summary Page](https://i.imgur.com/Hzw29fo.png)
+![Summary Page](https://i.imgur.com/HNUveZI.png)g)
 
 [Learn more about your debt here.](https://wealth-in-hand-debt-tracker.herokuapp.com/)
 
