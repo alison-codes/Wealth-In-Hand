@@ -7,10 +7,9 @@ Wealth In Hand is a financial wellness provider that brings education to employe
 
 ![Landing Page](https://i.imgur.com/iYAEPP6.png)
 
-![Summary Page](https://i.imgur.com/HNUveZI.png)g)
+![Summary Page](https://i.imgur.com/HNUveZI.png)
 
 [Learn more about your debt here.](https://wealth-in-hand-debt-tracker.herokuapp.com/)
-
 
 ## Technologies Used
   * MongoDB Atlas
@@ -26,8 +25,7 @@ Wealth In Hand is a financial wellness provider that brings education to employe
 ## Future Development
   * Provide a more holistic analysis of a user's overall debt burden and suggest which debts to tackle first
   * Offer a debt snowball component that projects how additional payments will impact debt payoff
-  * Include more education about various components of debt management from a financial perspective and teach users about sound financial practices
-
+  * Include education on various components of debt management to teach users about sound financial practices
 
 ## Credits
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
