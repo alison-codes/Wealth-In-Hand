@@ -111,7 +111,7 @@ class App extends Component {
                     <form onSubmit={this.handleGoogleUpdate}>
                       <div className="field-wrapper">
                         {this.state.debtList[0] ? <h2 className="accent-text">Add another debt.</h2> : <h2 className="accent-text"> Don't be shy. Tell us about your debt.</h2>}
-                        <h4 className="text-muted">You might an idea of what your debt interest rate is, but by the time you’ve made payments, you may be shocked to see how much those interest payments have added onto your bill.</h4>
+                        <h4 className="text-muted">You might have an idea of what your debt interest rate is, but by the time you’ve made payments, you may be shocked to see how much those interest payments have added onto your bill.</h4>
                         <h5 className="text-left text-sm-left">Nickname for debt</h5>
                         <input
                           className="form-control"
