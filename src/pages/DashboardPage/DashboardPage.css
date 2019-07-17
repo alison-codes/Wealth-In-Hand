@@ -1,3 +1,11 @@
+button.btn-link{
+    color: var(--dark-green)
+}
+
+button.btn-link:focus, button.btn-link:hover {
+    color: black;
+}
+
 .DashboardPage-component>div:nth-child(2)>div>div>div>ol>div>div>svg>g {
     text-align: center;
     display: inline;
@@ -14,8 +22,11 @@
     margin-top: -50px;
 }
 
-
 .lead {
     font-size: 20px;
     font-family: var(--headings-font-family)
+}
+
+.summary-text{
+    padding: 20px 60px;
 }

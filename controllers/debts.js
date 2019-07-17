@@ -32,7 +32,6 @@ async function createDebt(req, res) {
         req.body.totalInterest = parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')) > 0 ? parseFloat(googleSheets.rows.data[0][[0]].replace(',', '')) : Infinity;
         Debt.create(
             req.body, function (err, debt) {
-                console.log(debt);
                 if (err) throw err;
                 res.json(debt);
             });

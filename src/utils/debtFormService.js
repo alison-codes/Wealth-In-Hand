@@ -13,12 +13,6 @@ export async function getAllDebts() {
   };
   return fetch(BASE_URL, options).then(res => res.json());
 }
-// export async function getAllDebts() {
-//   return fetch(BASE_URL).then(res => {
-//     if (res.ok) return res.json();
-//   })
-// }
-
 
 export function createDebt(data) {
   const options = {

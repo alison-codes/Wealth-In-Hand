@@ -2,6 +2,8 @@
     border-radius: 10px !important;
     padding: 12px 30px !important;
     font-weight: 700;
+    background-color: var(--orange)!important;
+    border-color: var(--orange)!important;
 }
 
 .feature img {
@@ -14,15 +16,11 @@
     box-shadow: -12px 12px 10px  #888888;
 }
 
-.Landing-background {
-    background: linear-gradient(168deg, #ffffff 50%, var(--blue-green) 0);
-    margin-bottom: 0px;
-}
-
 .jumbotron-fluid {
     margin-bottom: 0rem;
 }
 
 #Landing-background {
     margin-bottom: 0rem;
+    background: linear-gradient(168deg,#fff 50%,var(--blue-green) 0) !important;
 }

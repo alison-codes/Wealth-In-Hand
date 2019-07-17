@@ -27,7 +27,6 @@ const debtSchema = new Schema({
         type: Number,
         default: 10,
         min: 0.01,
-        max: 99,
     },
     monthPaidOff: {
         type: String,

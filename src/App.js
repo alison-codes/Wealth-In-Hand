@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import userService from './utils/userService';
-import { getAllDebts, createDebt, updateGoogleSheet, deleteDebt } from './utils/debtFormService';
+import { getAllDebts, createDebt, deleteDebt } from './utils/debtFormService';
 import SignUpPage from './pages/SignupPage/SignupPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import NavBar from './components/NavBar/NavBar';
@@ -12,27 +12,30 @@ import './App.css';
 
 class App extends Component {
   state = {
+    isLoading: false,
     debtList: [],
     newDebt: {},
     user: userService.getUser(),
   }
-
   async componentDidMount() {
     if (this.state.user) {
       let debtList = await getAllDebts();
-      console.log(debtList);
       this.setState({ debtList });
     }
   }
   handleGoogleUpdate = async (e) => {
     //Updates the model data based on the Google API call
     e.preventDefault();
+    this.setState({ isLoading: true });
     let newDebt = await createDebt(this.state.newDebt);
     let debtList = [...this.state.debtList];
     // With the saved result, update state
     debtList.push(newDebt);
-    this.setState({ debtList });
-    getAllDebts();
+    window.scrollTo(0, 150);
+    this.setState({
+      debtList,
+      isLoading: false
+    });
   }
   handleChange = (e) => {
     let newDebt = { ...this.state.newDebt }
@@ -41,6 +44,7 @@ class App extends Component {
       newDebt,
     })
   }
+
   handleLogout = () => {
     userService.logout();
     this.setState({ user: null });
@@ -58,19 +62,18 @@ class App extends Component {
   isFormInvalid() {
     //Prevent user from submitting the add debt form without necessary info
     return !(this.state.newDebt.balance && this.state.newDebt.apr && this.state.newDebt.minimumPayment);
-    getAllDebts();
   }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img className="App-logo" src="https://static.wixstatic.com/media/fc6bf7_e3adb2670cbb46f4be97152ee68f8901~mv2.png/v1/crop/x_20,y_0,w_733,h_333/fill/w_352,h_160,al_c,q_80,usm_0.66_1.00_0.01/WIH-word-whit.webp" alt="WEALTH IN HAND" />
-          <NavBar
-            user={this.state.user}
-            handleLogout={this.handleLogout}
-          />
-        </header>
-        <main className="App">
+        <main>
+          <header className="App-header">
+            <img className="App-logo" src="https://static.wixstatic.com/media/fc6bf7_e3adb2670cbb46f4be97152ee68f8901~mv2.png/v1/crop/x_20,y_0,w_733,h_333/fill/w_352,h_160,al_c,q_80,usm_0.66_1.00_0.01/WIH-word-whit.webp" alt="WEALTH IN HAND" />
+            <NavBar
+              user={this.state.user}
+              handleLogout={this.handleLogout}
+            />
+          </header>
           <Switch>
             <Route exact path="/signup" render={({ history }) =>
               <SignUpPage
@@ -95,8 +98,8 @@ class App extends Component {
                 <Redirect to='/login' />
             } />
             <Route exact path="/" render={() =>
-              <LandingPage 
-              user={this.state.user}
+              <LandingPage
+                user={this.state.user}
               />
             } />
           </Switch>
@@ -127,7 +130,7 @@ class App extends Component {
                           placeholder="10,000"
                           name='balance'
                           type='number'
-                          step='10'
+                          step='1'
                           onChange={this.handleChange}
                           value={this.state.newDebt.balance} />
                         <span className="input-group-addon">.00</span>
@@ -141,13 +144,13 @@ class App extends Component {
                           name='apr'
                           type='number'
                           step='0.01'
+                          pattern="\d+"
                           onChange={this.handleChange}
                           value={this.state.newDebt.apr} />
                         <span className="input-group-addon">%</span>
                       </div>
                       <br></br>
                       <h5 className="text-left text-sm-left">What's the minimum monthly payment on this debt?</h5>
-
                       <div className="input-group">
                         <span className="input-group-addon">$</span>
                         <input
@@ -164,25 +167,38 @@ class App extends Component {
                         type='submit'
                         disabled={this.isFormInvalid()}
                         className="btn btn-success"
-                        value='ANALYZE THIS DEBT'
+                        value={this.state.isLoading ? 'Loading...' : 'ANALYZE THIS DEBT'}
                       />
                     </form>
                   </div>
                 </div>
               </div>
-            </div> : <div> </div>} <br />
+            </div> : null
+          } <br />
         </main>
         <footer className="App-footer">
-          <a href="https://www.linkedin.com/company-beta/18112770/" target="_blank" rel="noopener noreferrer">
-            <img alt="White LinkedIn Icon" data-type="image" src="https://static.wixstatic.com/media/7528824071724d12a3e6c31eee0b40d4.png/v1/fill/w_40,h_40,al_c,q_80,usm_0.66_1.00_0.01/7528824071724d12a3e6c31eee0b40d4.webp" />
-          </a>
-          <a href="https://www.facebook.com/wealthinhand/" target="_blank" rel="noopener noreferrer">
-            <img alt="White Facebook Icon" data-type="image" src="https://static.wixstatic.com/media/23fd2a2be53141ed810f4d3dcdcd01fa.png/v1/fill/w_40,h_40,al_c,q_80,usm_0.66_1.00_0.01/23fd2a2be53141ed810f4d3dcdcd01fa.webp" />
-          </a>
-          <a href="https://www.instagram.com/wealthinhand/" target="_blank" rel="noopener noreferrer">
-            <img alt="White Instagram Icon" data-type="image" src="https://static.wixstatic.com/media/81af6121f84c41a5b4391d7d37fce12a.png/v1/fill/w_40,h_40,al_c,q_80,usm_0.66_1.00_0.01/81af6121f84c41a5b4391d7d37fce12a.webp" />
-          </a>
-          &nbsp;&nbsp;&nbsp; team@wealthinhand.com | San Francisco, CA
+          <hr />
+          <div className="container">
+            <div className="row">
+              <div className="col-6">
+                <p> team@wealthinhand.com
+            </p>
+              </div>
+              <div className="col-6">
+                <ul className="social-icons">
+                  <li><a href="https://www.linkedin.com/company-beta/18112770/" target="_blank" rel="noopener noreferrer">
+                    <img alt="White LinkedIn Icon" data-type="image" src="https://static.wixstatic.com/media/7528824071724d12a3e6c31eee0b40d4.png/v1/fill/w_40,h_40,al_c,q_80,usm_0.66_1.00_0.01/7528824071724d12a3e6c31eee0b40d4.webp" />
+                  </a></li>
+                  <li><a href="https://www.facebook.com/wealthinhand/" target="_blank" rel="noopener noreferrer">
+                    <img alt="White Facebook Icon" data-type="image" src="https://static.wixstatic.com/media/23fd2a2be53141ed810f4d3dcdcd01fa.png/v1/fill/w_40,h_40,al_c,q_80,usm_0.66_1.00_0.01/23fd2a2be53141ed810f4d3dcdcd01fa.webp" />
+                  </a></li>
+                  <li><a href="https://www.instagram.com/wealthinhand/" target="_blank" rel="noopener noreferrer">
+                    <img alt="White Instagram Icon" data-type="image" src="https://static.wixstatic.com/media/81af6121f84c41a5b4391d7d37fce12a.png/v1/fill/w_40,h_40,al_c,q_80,usm_0.66_1.00_0.01/81af6121f84c41a5b4391d7d37fce12a.webp" />
+                  </a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
         </footer>
       </div>
     );
